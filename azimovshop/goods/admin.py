@@ -24,4 +24,3 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ParametersInProduct)
-
