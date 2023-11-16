@@ -2,9 +2,11 @@ from django.contrib import admin
 
 from .models import Product, ParametersInProduct, Category, Parameter
 
+
 class ParameterInline(admin.TabularInline):
     model = ParametersInProduct
     extra = 1
+
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -13,14 +15,16 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     inlines = ParameterInline,
 
+
 @admin.register(Parameter)
 class ParameterAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'unit')
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'slug')
+    search_fields = ('name', 'slug')
 
 
 admin.site.register(ParametersInProduct)
