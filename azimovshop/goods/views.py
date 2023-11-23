@@ -1,7 +1,13 @@
 from django.http import HttpResponse
-from django.template import loader
+from django.shortcuts import render
+
+from .models import Product
 
 
 def index(request):
-    template = loader.get_template('base.html')
-    return HttpResponse(template.render({}, request))
+    products = Product.objects.all()
+    context = {
+        'products': products
+    }
+    template = 'goods/index.html'
+    return render(request, template, context)
