@@ -9,7 +9,9 @@
 <body>
 {% include 'includes/header.html' %}
 <main>
-
+ <div class="container py5">
+   {% block content %} контент {% endblock %}
+ </div>
 </main>
 {% include 'includes/footer.html' %}
 </body>

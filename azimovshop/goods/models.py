@@ -7,7 +7,7 @@ User = get_user_model()
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название категории')
     description = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to='category/')
     slug = models.SlugField(unique=True)
 
     class Meta:
@@ -28,7 +28,7 @@ class Parameter(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to='product/')
     count = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
     old_price = models.PositiveIntegerField()
