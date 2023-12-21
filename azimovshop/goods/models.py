@@ -42,8 +42,9 @@ class Product(models.Model):
 
 class ParametersInProduct(models.Model):
     parameter = models.ForeignKey(Parameter, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    unit = models.CharField(max_length=200)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='param')
+    value = models.CharField(max_length=200) # значение
 
     def __str__(self):
         return f'{self.product} - {self.parameter}'
