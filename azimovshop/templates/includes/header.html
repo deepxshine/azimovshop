@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar" style="background-color: #ffa600">
     <div class="container-fluid">
-      <a class="navbar-brand text-dark" href="#" style="font-size: 24px">
+      <a class="navbar-brand text-dark" href="{% url 'goods:index' %}" style="font-size: 24px">
         <span style="color:#ffffff">Azi</span>Shop
       </a>
       <form class="d-flex">
@@ -10,7 +10,7 @@
       </form>
       <ul class="nav">
         <li class="nav-item">
-          <a href="#" class="nav-link" style="color:#ffffff">Каталог</a>
+          <a href="{% url 'goods:category_list' %}" class="nav-link" style="color:#ffffff">Каталог</a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link" style="color:#ffffff">Избранное</a>

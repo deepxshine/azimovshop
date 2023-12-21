@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
-{% block title %}AziShop{% endblock %}
+{% block title %}{{category.name}}{% endblock %}
 {% block content %}
-
+<h1>{{category.name}}</h1>
+<div>
+  <p>{{category.description}}</p>
+</div>
 {% include 'includes/cards.html' %} {# вставить карточки #}
 
 {% endblock %}

@@ -11,7 +11,7 @@
     </div>
     <div class="col">
       <h1>{{ product.name }}</h1>
-      <p>В категории <a href="#" style="color: black;">{{product.category}}</a></p>
+      <p>В категории <a href="{% url 'goods:category_detail' product.category.slug %}" style="color: black;">{{product.category}}</a></p>
       <div style="border: 1px solid black; border-radius:10px; padding: 10px">
         <div class="row">
           <div class="col">

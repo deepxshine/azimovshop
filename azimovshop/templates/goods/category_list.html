@@ -10,7 +10,7 @@
       <img src="{{ im.url }}" class="card-img-top" alt="...">
       {% endthumbnail %}
       <div class="card-body">
-       <a href="{# url 'goods:good_info' product.id #}" style="color:black"> <h5 class="card-title">{{ category.name }}</h5></a>
+       <a href="{% url 'goods:category_detail' category.slug %}" style="color:black"> <h5 class="card-title">{{ category.name }}</h5></a>
         <p class="card-text">{{ category.description|truncatewords:10 }}</p>
       </div>
     </div>

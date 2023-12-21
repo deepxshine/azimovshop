@@ -33,7 +33,16 @@ def category_list(request):
     return render(request, template, context)
 
 
-def category_detail():
+def category_detail(request, slug):
     """
     Должна получить товары в определенной категории
     """
+    category = get_object_or_404(Category, slug=slug)
+    products = Product.objects.filter(category=category)
+    context = {
+        "products": products,
+        "category": category
+    }
+    template = 'goods/category_detail.html'
+    return render(request, template, context)
+
