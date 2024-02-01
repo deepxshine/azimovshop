@@ -77,7 +77,7 @@ class Favorite(models.Model):
         verbose_name = 'Избанное'
 
     def __str__(self):
-        return self.product
+        return str(self.product)
 
 
 class ShoppingCart(models.Model):

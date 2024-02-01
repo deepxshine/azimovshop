@@ -1,7 +1,8 @@
 from django.urls import path
 
 from .views import (index, good_info, category_list, category_detail, search,
-                    profile_detail)
+                    profile_detail, add_to_cart, add_to_favorite,
+                    del_from_favorite, del_from_shopping_cart)
 
 app_name = 'goods'
 
@@ -11,5 +12,12 @@ urlpatterns = [
     path('category/', category_list, name='category_list'),
     path('category/<slug>/', category_detail, name='category_detail'),
     path('search', search, name='search'),
-    path('profile/', profile_detail, name='profile')
+    path('profile/', profile_detail, name='profile'),
+
+    path('good/<int:pk>/add_to_cart/', add_to_cart, name='cart_add'),
+    path('good/<int:pk>/del_from_cart/', del_from_shopping_cart,
+         name='cart_del'),
+    path('good/<int:pk>/add_to_fav/', add_to_favorite, name='fav_add'),
+    path('good/<int:pk>/del_from_fav/', del_from_favorite, name='fav_del'),
+
 ]
