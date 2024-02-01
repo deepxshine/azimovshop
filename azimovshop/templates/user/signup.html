@@ -4,25 +4,13 @@
 <h1>Регистрация</h1>
 
 <div class="container py-5">
-  {% if form.errors %} {# если в поле есть ошибки #}
-  {% for field in form %} {# ошибки при заполнении полей #}
-  {% for error in field %}
-  <div class="alert alert-danger">
-    {{ error|escape }}
-  </div>
-  {% endfor %}
-  {% endfor %}
-  {% for error in form.non_field_errors %} {# ошибки вне полей полей #}
-  <div class="alert alert-danger">
-    {{ error|escape }}
-  </div>
-  {% endfor %}
-  {% endif %} {# ошибки обработаны #}
 
+  {% include 'includes/form_errors.html' %}
   <form method="post" action="{% url 'user:signup' %}">
     {% csrf_token %}
-    {{ form.as_p}}
-    <input type="submit" value="Зарегистрироваться">
+    {% include 'includes/form.html' %}
+
+    <button type="submit" class="btn" style="background-color:#ffa600; color: white">Зарегистрироваться</button>
   </form>
 
 </div>

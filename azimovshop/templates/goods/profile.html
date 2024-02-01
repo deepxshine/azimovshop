@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col">
+      {% if user.prof.avatar %}
+      {% thumbnail user.prof.avatar "500x500" as im %}
+      <img src="{{im.url}}">
+      {% endthumbnail %}
+      {% else %}
+      <img src="{% static 'img/blank_ava.png' %}" height="400" width="400">
+      {% endif %}
+    </div>
+    <div class="col">
+      <h2>
+        {% if user.get_full_name %}
+        {{ user.get_full_name }}
+        {% else %}
+        {{ user.username }}
+        {% endif %}
+      </h2>
+      <div>
+        <ul>
+          <li>Адрес электронной почты
+            {% if user.email %}{{ user.email }}
+            {% else %}Не указан {% endif %}</li>
+          <li>Номер телефона
+          {% if user.prof.phone %}{{ user.prof.phone }}
+            {% else %}Не указан  {% endif %}</li>
+          <li>Адрес доставок {% if user.prof.address %}{{ user.prof.address }}
+            {% else %}Не указан  {% endif %} </li>
+          <li>Дата рождения {% if user.prof.birthday %}{{ user.prof.birthday }}
+            {% else %}Не указан  {% endif %} </li>
+          <li>Дата регистрации {{user.data_joined}} </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

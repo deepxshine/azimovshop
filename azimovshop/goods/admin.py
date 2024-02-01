@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Product, ParametersInProduct, Category, Parameter
+from .models import (Product, ParametersInProduct, Category, Parameter,
+                     Profile, Favorite, ShoppingCart)
 
 
 class ParameterInline(admin.TabularInline):
@@ -28,3 +29,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ParametersInProduct)
+admin.site.register(Profile)
+admin.site.register(Favorite)
+admin.site.register(ShoppingCart)

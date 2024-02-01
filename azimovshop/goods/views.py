@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Product, Category
+from .models import Product, Category, User, Favorite
 
 
 def index(request):
@@ -46,3 +47,37 @@ def category_detail(request, slug):
     template = 'goods/category_detail.html'
     return render(request, template, context)
 
+
+def search(request):
+    query = request.GET.get('text')
+    products = Product.objects.filter(name__icontains=query)
+    context = {
+        'products': products
+    }
+    template = 'goods/index.html'
+    return render(request, template, context)
+
+
+@login_required
+def profile_detail(request):
+    user = get_object_or_404(User, id=request.user.id)
+
+    context = {
+        'user': user,
+    }
+    template = 'goods/profile.html'
+    return render(request, template, context)
+
+
+@login_required
+def add_to_favorite(request, pk):
+    product = get_object_or_404(Product, id=pk)
+    user = get_object_or_404(User, id=request.user.id)
+    if not Favorite.objects.filter(user=user, product=product).exists():
+        Favorite.objects.create(user=user, product=product)
+    return redirect('goods:good_info', pk)
+
+
+
+def add_to_cart():
+    pass

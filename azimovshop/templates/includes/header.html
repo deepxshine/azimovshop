@@ -4,14 +4,20 @@
       <a class="navbar-brand text-dark" href="{% url 'goods:index' %}" style="font-size: 24px">
         <span style="color:#ffffff">Azi</span>Shop
       </a>
-      <form class="d-flex">
-        <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+
+      <form class="d-flex" method="get" action="{% url 'goods:search' %}">
+        <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" name="text">
         <button class="btn btn-outline-dark" type="submit">Поиск</button>
       </form>
+
+
       <ul class="nav">
         <li class="nav-item">
           <a href="{% url 'goods:category_list' %}" class="nav-link" style="color:#ffffff">Каталог</a>
         </li>
+
+        {% if user.is_authenticated %}
+
         <li class="nav-item">
           <a href="#" class="nav-link" style="color:#ffffff">Избранное</a>
         </li>
@@ -19,8 +25,24 @@
           <a href="#" class="nav-link" style="color:#ffffff">Корзина</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link" style="color:#ffffff">Профиль</a>
+          <a href="{% url 'goods:profile' %}" class="nav-link" style="color:#ffffff">Профиль</a>
         </li>
+        <li class="nav-item">
+          <a href="{% url 'user:logout' %}" class="nav-link" style="color:#ffffff">Выход</a>
+        </li>
+
+        {% else %}
+
+        <li class="nav-item">
+          <a href="{% url 'user:login' %}" class="nav-link" style="color:#ffffff">Вход</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'user:signup' %}" class="nav-link" style="color:#ffffff">Регистрация</a>
+        </li>
+
+        {% endif %}
+
+
       </ul>
     </div>
   </nav>

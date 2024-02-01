@@ -4,6 +4,22 @@ from django.db import models
 User = get_user_model()
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE,
+                                related_name='prof')
+    phone = models.CharField(max_length=11, verbose_name='Телефон')
+    address = models.CharField(max_length=1024, verbose_name='Адрес')
+    birthday = models.DateField(verbose_name='Дата рождения', blank=True)
+    avatar = models.ImageField(upload_to='profiles',
+                               verbose_name='Изображение', blank=True)
+
+    class Meta:
+        verbose_name = 'Профиль'
+
+    def __str__(self):
+        return str(self.user)
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название категории')
     description = models.TextField()
@@ -44,7 +60,35 @@ class ParametersInProduct(models.Model):
     parameter = models.ForeignKey(Parameter, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE,
                                 related_name='param')
-    value = models.CharField(max_length=200) # значение
+    value = models.CharField(max_length=200)  # значение
 
     def __str__(self):
         return f'{self.product} - {self.parameter}'
+
+
+class Favorite(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='fav')
+    data_add = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name='fav')
+
+    class Meta:
+        verbose_name = 'Избанное'
+
+    def __str__(self):
+        return self.product
+
+
+class ShoppingCart(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='cart')
+    count = models.PositiveIntegerField(verbose_name="Количество")
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name='cart')
+
+    class Meta:
+        verbose_name = 'Корзина'
+
+    def __str__(self):
+        return self.product
