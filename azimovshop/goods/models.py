@@ -92,3 +92,25 @@ class ShoppingCart(models.Model):
 
     def __str__(self):
         return self.product
+
+
+class Review(models.Model):
+    STARS = [
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    ]
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                verbose_name='Товар')
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             verbose_name='Пользователь')
+    text = models.CharField(max_length=512, verbose_name='Текст отзыва')
+    rating = models.PositiveIntegerField(choices=STARS, verbose_name='Рейтинг')
+
+    class Meta:
+        verbose_name = 'Отзыв'
+
+    def __str__(self):
+        return self.text[:30]

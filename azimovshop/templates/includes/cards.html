@@ -11,10 +11,10 @@
        <a href="{% url 'goods:good_info' product.id %}" style="color:black"> <h5 class="card-title">{{ product.name }}</h5></a>
         <p class="card-text">{{ product.description|truncatewords:10 }}</p>
       </div>
-      <div class="card-footer">
+      <div class="card-footer" style="padding-bottom:0px">
         <p class="card-text">{{ product.price }} ₽</p>
-        <a href="#" class="btn btn-primary">in bin</a>
-        <a href="#" class="btn btn-success">purchase now</a>
+        {% include 'includes/shopping_cart.html' %}
+        {% include 'includes/heart.html' %}
       </div>
     </div>
   </div>

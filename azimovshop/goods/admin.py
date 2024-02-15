@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (Product, ParametersInProduct, Category, Parameter,
-                     Profile, Favorite, ShoppingCart)
+                     Profile, Favorite, ShoppingCart, Review)
 
 
 class ParameterInline(admin.TabularInline):
@@ -32,3 +32,4 @@ admin.site.register(ParametersInProduct)
 admin.site.register(Profile)
 admin.site.register(Favorite)
 admin.site.register(ShoppingCart)
+admin.site.register(Review)

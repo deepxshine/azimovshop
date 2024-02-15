@@ -11,7 +11,8 @@
     </div>
     <div class="col">
       <h1>{{ product.name }}</h1>
-      <p>В категории <a href="{% url 'goods:category_detail' product.category.slug %}" style="color: black;">{{product.category}}</a></p>
+      <p>В категории <a href="{% url 'goods:category_detail' product.category.slug %}" style="color: black;">{{product.category}}</a>
+      </p>
       <div style="border: 1px solid black; border-radius:10px; padding: 10px">
         <div class="row">
           <div class="col">
@@ -25,16 +26,9 @@
             </ul>
           </div>
           <div class="col">
-            <button class="button"
-                    style="background-color: #ffa600; color: #fff; border-radius:12px; border:none; padding: 15px 32px;">
-              Купить
-            </button>
-            <button class="button" style="background-color: #fff;  border:none;">
-              <a href="">
-                {% include 'includes/heart.svg' %}
-
-              </a>
-            </button>
+            <p>Рейтинг {{ rating.rating__avg }} ⭐️</p>
+            {% include 'includes/shopping_cart.html' %}
+            {% include 'includes/heart.html' %}
             <p>Остаток {{ product.count }}</p>
           </div>
 
@@ -56,11 +50,30 @@
 <div class="container" style="border: 1px solid black; border-radius:10px; padding: 10px; margin-top: 10px">
   <p style="margin: 15px">{{ product.description }}</p>
 </div>
+
+<div class="py-2" style="border: 1px solid black; border-radius:10px; margin-top:10px">
+  {% include 'includes/form_errors.html' %}
+  <form action="{% url 'goods:create_review' product.id %}" method="post">
+    {% csrf_token %}
+    {% include 'includes/form.html' %}
+    <button type="submit" class="btn" style="background-color:#ffa600; color: white">Отправить отзыв</button>
+  </form>
+</div>
+
+<div>
+  {% for review in reviews %}
+  <div class="py-2" style="border: 1px solid black; border-radius:10px; margin-top:10px; padding:15px">
+    <h5>{% if review.user.get_full_name %} {{ review.user.get_full_name }} {% else %} {{ review.user }} {% endif %}</h5>
+    <span style="text-muted">
+      ⭐️{{ review.rating}}
+    </span>
+    <p>{{review.text}}</p>
+  </div>
+  {% endfor %}
+</div>
 <style>
   .button {
     float: left;
 }
-
-
 </style>
 {% endblock %}
