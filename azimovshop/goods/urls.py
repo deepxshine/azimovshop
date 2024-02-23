@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (index, good_info, category_list, category_detail, search,
                     profile_detail, add_to_cart, add_to_favorite,
                     del_from_favorite, del_from_shopping_cart, favorite_index,
-                    create_review, shopping_cart_info)
+                    create_review, shopping_cart_info, shopping_cart_count)
 
 app_name = 'goods'
 
@@ -23,4 +23,6 @@ urlpatterns = [
     path('favorites/', favorite_index, name='favorite'),
     path('create_review/<int:pk>/', create_review, name='create_review'),
     path('shopping_cart/', shopping_cart_info, name='cart'),
+    path('shopping_cart/edit/<int:pk>/', shopping_cart_count,
+         name='cart_count'),
 ]

@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Avg
+from django.db.models import Avg, F
 from .forms import ReviewForm
-from .models import Product, Category, User, Favorite, ShoppingCart, Review
+from .models import (Product, Category, User, Favorite, ShoppingCart, Review,
+                     Order, ProductsInOrder)
 
 
 def check(user, product):
@@ -147,7 +148,8 @@ def favorite_index(request):
 @login_required
 def shopping_cart_info(request):
     shopping_cart = ShoppingCart.objects.filter(user=request.user)
-
+    for item in shopping_cart:
+        item.sum = item.product.price * item.count
     context = {
         "shopping_cart": shopping_cart
     }
@@ -164,3 +166,36 @@ def create_review(request, pk):
         review.product = get_object_or_404(Product, id=pk)
         review.save()
     return redirect('goods:good_info', pk)
+
+
+@login_required
+def shopping_cart_count(request, pk):
+    cart = ShoppingCart.objects.get(user=request.user, product__id=pk) # один объект
+    print(cart)
+    print(request.POST)
+    if 'plus.x' in request.POST:
+        print("вы нажали плюс")
+        cart.count = cart.count+1
+        cart.save()
+    elif 'minus.x' in request.POST:
+        if cart.count == 1:
+            cart.delete()
+        else:
+            cart.count = cart.count - 1
+            cart.save()
+    return redirect('goods:cart')
+
+
+@login_required
+def create_order(request):
+    """
+    1) Создает запись в таблице ORDER ✅
+    2) В таблицу ProductInOrder добавить товары из корзины
+    3) Посчитать сумму одной позиции
+    4) Посчитать сумму товаров в таблице ORDER
+    5) Удалить корзину
+    6) Какое-то сообщение
+    """
+    order = Order.objects.create(user=request.user)
+    cart = ShoppingCart.objects.filter(user=request.user)
+

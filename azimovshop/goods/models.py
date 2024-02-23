@@ -91,7 +91,7 @@ class ShoppingCart(models.Model):
         verbose_name = 'Корзина'
 
     def __str__(self):
-        return self.product
+        return str(self.product)
 
 
 class Review(models.Model):
@@ -114,3 +114,24 @@ class Review(models.Model):
 
     def __str__(self):
         return self.text[:30]
+
+
+class Order(models.Model):
+    STATUSES = [
+        ("Принят", "Принят"),
+        ("Упакован", "Упакован"),
+        ("В пути", "В пути"),
+        ("Доставлен", "Доставлен"),
+        ("Отменен", "Отменен")
+    ]
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    order_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=32, choices=STATUSES, default="Принят")
+    summa = models.IntegerField(blank=True)
+
+
+class ProductsInOrder(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    count = models.IntegerField()
+    summa = models.IntegerField()
