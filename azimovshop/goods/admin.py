@@ -29,10 +29,24 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('name', 'slug')
 
 
+class ProductsInOrderInline(admin.TabularInline):
+    model = ProductsInOrder # модель, на основе которой создается инлайн
+    extra = 0  # сколько пустых полей создается
+    can_delete = False
+    readonly_fields = ('summa', 'count', 'product', 'order')
+    show_change_link = True
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    inlines = (ProductsInOrderInline,)
+    fields = ('id', 'user', 'status', 'summa', 'order_date')
+    readonly_fields = ('id', 'user', 'summa', 'order_date')
+
+
 admin.site.register(ParametersInProduct)
 admin.site.register(Profile)
 admin.site.register(Favorite)
 admin.site.register(ShoppingCart)
 admin.site.register(Review)
-admin.site.register(Order)
-admin.site.register(ProductsInOrder)
+

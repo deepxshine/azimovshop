@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Avg, F
+
+from django.http import Http404
+
 from .forms import ReviewForm
 from .models import (Product, Category, User, Favorite, ShoppingCart, Review,
                      Order, ProductsInOrder)
@@ -196,6 +199,34 @@ def create_order(request):
     5) Удалить корзину
     6) Какое-то сообщение
     """
-    order = Order.objects.create(user=request.user)
-    cart = ShoppingCart.objects.filter(user=request.user)
 
+    cart = ShoppingCart.objects.filter(user=request.user)
+    if not cart.exists():
+        raise Http404('Not Found')
+    order = Order.objects.create(user=request.user, summa=0)
+    total_cost = 0
+
+    for cart_product in cart:
+        print(cart_product.product.price)
+        total_cost += cart_product.product.price * cart_product.count
+        print(total_cost)
+        ProductsInOrder.objects.create(product=cart_product.product,
+                                       count=cart_product.count,
+                                       summa=cart_product.product.price,
+                                       order=order)
+        cart_product.delete()
+    order.summa = total_cost
+    order.save()
+    print(order)
+    return redirect("goods:index")
+
+
+@login_required
+def order_history(request):
+    user = request.user
+    orders = Order.objects.filter(user=user)
+    context = {
+        "orders": orders
+    }
+    template = "goods/order_history.html"
+    return render(request, template, context)

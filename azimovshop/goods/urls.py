@@ -3,7 +3,8 @@ from django.urls import path
 from .views import (index, good_info, category_list, category_detail, search,
                     profile_detail, add_to_cart, add_to_favorite,
                     del_from_favorite, del_from_shopping_cart, favorite_index,
-                    create_review, shopping_cart_info, shopping_cart_count)
+                    create_review, shopping_cart_info, shopping_cart_count,
+                    create_order, order_history)
 
 app_name = 'goods'
 
@@ -25,4 +26,6 @@ urlpatterns = [
     path('shopping_cart/', shopping_cart_info, name='cart'),
     path('shopping_cart/edit/<int:pk>/', shopping_cart_count,
          name='cart_count'),
+    path('order/', create_order, name='order'),
+    path('order_history/', order_history, name='order_history'),
 ]

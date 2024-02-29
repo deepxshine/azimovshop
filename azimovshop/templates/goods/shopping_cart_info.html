@@ -4,6 +4,8 @@
 {% block title %} Корзина {% endblock %}
 {% block content %}
 <div class="container">
+  <h1>Корзина</h1>
+  {% if shopping_cart %}
   {% for item in shopping_cart %}
   <div style="border: 1px solid black; border-radius:10px; margin-top:10px; padding:15px">
     <div class="row">
@@ -34,6 +36,11 @@
 
   </div>
   {% endfor %}
+  <a class="btn" href="{% url 'goods:order' %}">Заказать</a>
+  {% else %}
+  <h5>У вас нет товаров в корзине</h5>
+  <a href="{% url 'goods:index' %}">К покупкам</a>
+  {% endif %}
 </div>
 
 {% endblock %}

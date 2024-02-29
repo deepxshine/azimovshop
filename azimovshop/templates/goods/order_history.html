@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {# наследуется от base.html #}
+{% load thumbnail %}
+{% block title %} Корзина {% endblock %}
+{% block content %}
+<div class="container py-2">
+  <h1>История заказов</h1>
+  {% for order in orders %}
+  <div class="row" style="border: 1px solid black; border-radius:10px; margin-top:10px; padding:10px">
+    <h5>Номер заказа: {{order.id}}</h5>
+    <span class="text-muted">Дата заказа{{ order.order_date }}</span>
+    <span style="{% if order.status == 'Доставлен' %} color:green
+    {% elif order.status == 'Отменен' %} color:red {% else %} color:black {% endif %}">
+      Статус: {{ order.status }}
+    </span>
+    <span>К оплате: {{ order.summa }}₽</span>
+
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+      {% for product in order.products.all %}
+      <div class="col">
+        <div class="card">
+          {% thumbnail product.product.image "500x500" as im %}
+          <img src="{{ im.url }}" class="card-img-top" alt="...">
+          {% endthumbnail %}
+          <div class="card-body">
+            <a href="{% url 'goods:good_info' product.id %}" style="color:black"><h5 class="card-title"
+                                                                                     style="font-size:16px">
+              {{ product.product.name }}</h5></a>
+            <span>Количество: {{product.count}}</span> <br>
+            <span>Сумма: {{product.summa}}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

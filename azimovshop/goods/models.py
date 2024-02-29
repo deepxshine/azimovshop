@@ -129,9 +129,13 @@ class Order(models.Model):
     status = models.CharField(max_length=32, choices=STATUSES, default="Принят")
     summa = models.IntegerField(blank=True)
 
+    class Meta:
+        ordering = ['-order_date']
+
 
 class ProductsInOrder(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,
+                              related_name='products')
     count = models.IntegerField()
     summa = models.IntegerField()

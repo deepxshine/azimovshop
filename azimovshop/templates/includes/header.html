@@ -19,10 +19,13 @@
         {% if user.is_authenticated %}
 
         <li class="nav-item">
-          <a href="#" class="nav-link" style="color:#ffffff">Избранное</a>
+          <a href="{% url 'goods:favorite' %}" class="nav-link" style="color:#ffffff">Избранное</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link" style="color:#ffffff">Корзина</a>
+          <a href="{% url 'goods:cart' %}" class="nav-link" style="color:#ffffff">Корзина</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'goods:order_history' %}" class="nav-link" style="color:#ffffff">Заказы</a>
         </li>
         <li class="nav-item">
           <a href="{% url 'goods:profile' %}" class="nav-link" style="color:#ffffff">Профиль</a>
