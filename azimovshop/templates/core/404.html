@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Каталог{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="col">
+    <div class="card">
+    <h1>Ошибка 404</h1>
+      <p>Вы пытаетесь попасть на страницу, которой не существует</p>
+      <a class="btn" style="padding: 10px 35px; color: white; background-color: orange" href="{% url 'goods:index' %}">
+        Вернуться на главную
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

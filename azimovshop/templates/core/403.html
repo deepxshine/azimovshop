@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}403{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="col">
+    <div class="card">
+    <h1>У вас нет прав доступа к этой странице</h1>
+      <p>Она только для нас</p>
+      <a class="btn" style="padding: 10px 35px; color: white; background-color: orange" href="{% url 'goods:index' %}">
+        Вернуться на главную
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

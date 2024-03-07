@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Avg, F
 
 from django.http import Http404
+from django.core.exceptions import PermissionDenied
 
 from .forms import ReviewForm
 from .models import (Product, Category, User, Favorite, ShoppingCart, Review,
@@ -230,3 +231,10 @@ def order_history(request):
     }
     template = "goods/order_history.html"
     return render(request, template, context)
+
+
+def test(request):
+    print(request.user)
+    print(request.user.__class__)
+
+    raise PermissionDenied()
